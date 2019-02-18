@@ -71,21 +71,9 @@
     let slideSize = 102;
     $("#selected_marks").empty();
 
-    const navigation = $("<div>", {
-      class: "navigation"
-    }).appendTo("#selected_marks");
-
-    $("<div>", {
-      class: "leftArrow"
-    })
-      .click(() => {
-        $(".images").animate({ scrollLeft: "-=" + slideSize }, 500);
-      })
-      .appendTo(navigation);
-
     const imagesContainer = $("<div>", {
       class: "images"
-    }).appendTo(navigation);
+    }).appendTo("#selected_marks");
 
     for (let i = 0; i < images.length; i++) {
       let imageContainer = $("<div>", {
@@ -115,14 +103,6 @@
 
       imagesContainer.append(imageContainer);
     }
-
-    $("<div>", {
-      class: "rightArrow"
-    })
-      .click(() => {
-        $(".images").animate({ scrollLeft: "+=" + slideSize }, 500);
-      })
-      .appendTo(navigation);
   }
 
   function updateExtensionBasedOnSettings(settings) {
