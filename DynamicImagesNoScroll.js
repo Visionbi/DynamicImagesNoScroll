@@ -174,6 +174,14 @@
         const rowData = row.map(cell => {
           return cell.formattedValue;
         });
+
+        // format float if price
+        if (isFloat(rowData[indexPercentages])) {
+          rowData[indexPercentages] = parseFloat(
+            rowData[indexPercentages]
+          ).toFixed(2);
+        }
+
         return [rowData[indexCount]];
       });
 
