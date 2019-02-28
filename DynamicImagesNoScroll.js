@@ -176,10 +176,8 @@
         });
 
         // format float if price
-        if (isFloat(rowData[indexPercentages])) {
-          rowData[indexPercentages] = parseFloat(
-            rowData[indexPercentages]
-          ).toFixed(2);
+        if (isFloat(rowData[indexCount])) {
+          rowData[indexCount] = parseFloat(rowData[indexCount]).toFixed(2);
         }
 
         return [rowData[indexCount]];
