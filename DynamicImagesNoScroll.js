@@ -3,7 +3,6 @@
 // Wrap everything in an anonymous function to avoid poluting the global namespace
 (() => {
   const defaultIntervalInMin = "5";
-  let savedInfo;
   let unregisterHandlerFunctions = [];
 
   // Use the jQuery document ready signal to know when everything has been initialized
@@ -67,8 +66,7 @@
     );
   }
 
-  function displayImages(images, count, percentages) {
-    let slideSize = 102;
+  function displayImages(images, count, countText, percentages) {
     $("#selected_marks").empty();
 
     const imagesContainer = $("<div>", {
@@ -82,6 +80,7 @@
 
       let image = images[i][0] + " ".split(",");
       let singleCount = count[i][0] + " ".split(",");
+      let singleCountText = countText[i][0] + " ".split(",");
       let singlePercentages = percentages[i][0] + " ".split(",");
 
       $("<img />", {
@@ -89,17 +88,29 @@
         alt: ""
       }).appendTo(imageContainer);
 
+      let firstLine = "";
+
+      if (singleCount.indexOf("undefined") === -1) {
+        firstLine += singleCount;
+      }
+
+      if (singleCountText.indexOf("undefined") === -1) {
+        firstLine += singleCountText;
+      }
+
       $("<div>", {
         class: "counter"
       })
-        .text(`${singleCount}`)
+        .text(`${firstLine}`)
         .appendTo(imageContainer);
 
-      $("<div>", {
-        class: "percentages"
-      })
-        .text(`${singlePercentages}`)
-        .appendTo(imageContainer);
+      if (singlePercentages.indexOf("undefined") === -1) {
+        $("<div>", {
+          class: "percentages"
+        })
+          .text(`${singlePercentages}`)
+          .appendTo(imageContainer);
+      }
 
       imagesContainer.append(imageContainer);
     }
@@ -140,6 +151,7 @@
     );
     let indexImage = settings.selectedImage[1];
     let indexCount = settings.selectedCount[1];
+    let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
     // let cleanIndex = settings.selectedColumns.slice(
     //   1,
@@ -150,23 +162,6 @@
     // let columnsData = [];
     worksheet.getSummaryDataAsync().then(marks => {
       const worksheetData = marks;
-
-      // for (let i = 0; i < indexColumnstable.length; i++) {
-      //   let index = indexColumnstable[i];
-      //   //console.log(worksheetData.columns[index]);
-      //   columnsName.push(worksheetData.columns[index].fieldName);
-      // }
-
-      // const data = worksheetData.data.map(row => {
-      //   const rowData = row.map(cell => {
-      //     return cell.formattedValue;
-      //   });
-
-      //   for (let i = 0; i < indexColumnstable.length; i++) {
-      //     let index2 = indexColumnstable[i];
-      //     columnsData.push(rowData[index2]);
-      //   }
-      // });
 
       const image = worksheetData.data.map(row => {
         const rowData = row.map(cell => {
@@ -182,21 +177,35 @@
         return [rowData[indexCount]];
       });
 
+      const countText = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+        return [rowData[indexCountText]];
+      });
+
       const percentages = worksheetData.data.map(row => {
         const rowData = row.map(cell => {
           return cell.formattedValue;
         });
+
+        // format float as percentages
+        if (isFloat(rowData[indexPercentages])) {
+          rowData[indexPercentages] =
+            (rowData[indexPercentages] * 100).toFixed(2) + "%";
+        }
+
         return [rowData[indexPercentages]];
       });
 
       // Populate the data table with the rows and columns we just pulled out
-      displayImages(image, count, percentages);
+      displayImages(image, count, countText, percentages);
     });
   }
 
-  function isOdd(num) {
-    return num % 2;
-  }
+  const isFloat = value => {
+    return !isNaN(value) && value.toString().indexOf(".") != -1;
+  };
 
   function fetchCurrentSettings() {
     // While performing async task, show loading message to user.
