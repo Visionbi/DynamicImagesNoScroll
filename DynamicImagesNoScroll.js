@@ -16,6 +16,7 @@
         // changed for this extension, in the parent or popup (i.e. when settings.saveAsync is called).
         let currentSettings = tableau.extensions.settings.getAll();
         fetchFilter();
+        fetchParameter();
         fetchCurrentSettings();
         if (typeof currentSettings.sheet !== "undefined") {
           $("#inactive").hide();
@@ -153,13 +154,7 @@
     let indexCount = settings.selectedCount[1];
     let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
-    // let cleanIndex = settings.selectedColumns.slice(
-    //   1,
-    //   settings.selectedColumns.length - 1
-    // );
-    // let indexColumnstable = cleanIndex.split(",");
-    // let columnsName = [];
-    // let columnsData = [];
+
     worksheet.getSummaryDataAsync().then(marks => {
       const worksheetData = marks;
 
@@ -286,6 +281,29 @@
     // This could be optimized to add/remove only the different filters.
     //fetchFilters();
     //reload gauge
+    const settingsSaved = tableau.extensions.settings.getAll();
+    parseInfo(settingsSaved);
+  }
+
+  function fetchParameter() {
+    // To get filter info, first get the dashboard.
+    const dashboard = tableau.extensions.dashboardContent.dashboard;
+
+    // Add event listener to dashbaord parameters
+    dashboard.getParametersAsync().then(function(parameters) {
+      parameters.forEach(function(parameter) {
+        var unregisterHandlerFunction = parameter.addEventListener(
+          tableau.TableauEventType.ParameterChanged,
+          parameterChangedHandler
+        );
+
+        unregisterHandlerFunctions.push(unregisterHandlerFunction);
+      });
+    });
+  }
+
+  function parameterChangedHandler(filterEvent) {
+    // Just reconstruct the parameters table whenever a filter changes.
     const settingsSaved = tableau.extensions.settings.getAll();
     parseInfo(settingsSaved);
   }
