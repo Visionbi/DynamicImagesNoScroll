@@ -67,7 +67,7 @@
     );
   }
 
-  function displayImages(images, count, countText, percentages, link) {
+  function displayImages(images, count, countText, percentages, links) {
     $("#selected_marks").empty();
 
     const imagesInRow = 6;
@@ -83,11 +83,11 @@
       let singleCount = count[i][0] + " ".split(",");
       let singleCountText = countText[i][0] + " ".split(",");
       let singlePercentages = percentages[i][0] + " ".split(",");
-      let link = link[i][0] + " ".split(",");
+      let link = links[i][0] + " ".split(",");
 
       let imageContainer = $("<a>", {
         class: "imageContainer",
-        href: `${image}`,
+        href: `${link}`,
         target: "_blank"
       }).appendTo("#selected_marks");
 
