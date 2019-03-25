@@ -23,7 +23,8 @@ a:hover {
 #images label,
 #count label,
 #countText label,
-#percentages label {
+#percentages label,
+#link label {
   margin-left: 10px;
   font-weight: normal;
 }

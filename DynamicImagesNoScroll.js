@@ -67,7 +67,7 @@
     );
   }
 
-  function displayImages(images, count, countText, percentages) {
+  function displayImages(images, count, countText, percentages, link) {
     $("#selected_marks").empty();
 
     const imagesInRow = 6;
@@ -83,6 +83,7 @@
       let singleCount = count[i][0] + " ".split(",");
       let singleCountText = countText[i][0] + " ".split(",");
       let singlePercentages = percentages[i][0] + " ".split(",");
+      let link = link[i][0] + " ".split(",");
 
       let imageContainer = $("<a>", {
         class: "imageContainer",
@@ -171,6 +172,7 @@
     let indexCount = settings.selectedCount[1];
     let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
+    let indexLink = settings.selectedLink[1];
 
     worksheet.getSummaryDataAsync().then(marks => {
       const worksheetData = marks;
@@ -216,8 +218,15 @@
         return [rowData[indexPercentages]];
       });
 
+      const link = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+        return [rowData[indexLink]];
+      });
+
       // Populate the data table with the rows and columns we just pulled out
-      displayImages(image, count, countText, percentages);
+      displayImages(image, count, countText, percentages, link);
     });
   }
 
