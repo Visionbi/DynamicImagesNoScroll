@@ -3,6 +3,14 @@ h5 {
   font-weight: 700;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 .container {
   margin: 0;
   padding: 15px;
@@ -35,8 +43,8 @@ h5 {
 .images .imageContainer img {
   border-radius: 3px;
   margin-bottom: 5px;
-  width: 74px;
-  height: 123px;
+  width: 150px;
+  height: 210px;
 }
 
 .images .imageContainer .counter {

@@ -39,12 +39,12 @@
   function configure() {
     const popupUrl = `${
       window.location.origin
-    }/DynamicImagesNoScroll/extensionDialog.html`;
+    }/Vision/DynamicImagesNoScroll/extensionDialog.html`;
 
     tableau.extensions.ui
       .displayDialogAsync(popupUrl, defaultIntervalInMin, {
         height: 500,
-        width: 500
+        width: 500,
       })
       .then(closePayload => {
         $("#inactive").hide();
@@ -70,23 +70,29 @@
   function displayImages(images, count, countText, percentages) {
     $("#selected_marks").empty();
 
+    const imagesInRow = 6;
+
     const imagesContainer = $("<div>", {
-      class: "images"
+      class: "images",
     }).appendTo("#selected_marks");
 
-    for (let i = 0; i < images.length; i++) {
-      let imageContainer = $("<div>", {
-        class: "imageContainer"
-      }).appendTo("#selected_marks");
+    let imagesRow = $("<div>");
 
+    for (let i = 0; i < images.length; i++) {
       let image = images[i][0] + " ".split(",");
       let singleCount = count[i][0] + " ".split(",");
       let singleCountText = countText[i][0] + " ".split(",");
       let singlePercentages = percentages[i][0] + " ".split(",");
 
+      let imageContainer = $("<a>", {
+        class: "imageContainer",
+        href: `${image}`,
+        target: "_blank"
+      }).appendTo("#selected_marks");
+
       $("<img />", {
         src: `${image}`,
-        alt: ""
+        alt: "",
       }).appendTo(imageContainer);
 
       let firstLine = "";
@@ -100,20 +106,31 @@
       }
 
       $("<div>", {
-        class: "counter"
+        class: "counter",
       })
         .text(`${firstLine}`)
         .appendTo(imageContainer);
 
       if (singlePercentages.indexOf("undefined") === -1) {
         $("<div>", {
-          class: "percentages"
+          class: "percentages",
         })
           .text(`${singlePercentages}`)
           .appendTo(imageContainer);
       }
 
-      imagesContainer.append(imageContainer);
+      if (!((i + 1) % imagesInRow)) {
+        imagesRow.append(imageContainer);
+        imagesContainer.append(imagesRow);
+        imagesRow = $("<div>");
+      } else {
+        imagesRow.append(imageContainer);
+      }
+
+      if (i === (images.length - 1) && imagesRow.html()) {
+        imagesRow.append(imageContainer);
+        imagesContainer.append(imagesRow);
+      }
     }
   }
 
