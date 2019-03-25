@@ -87,7 +87,7 @@
       let imageContainer = $("<a>", {
         class: "imageContainer",
         href: `${image}`,
-        target: "_blank"
+        target: "_parent"
       }).appendTo("#selected_marks");
 
       $("<img />", {
