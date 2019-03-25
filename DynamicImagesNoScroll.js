@@ -39,7 +39,7 @@
   function configure() {
     const popupUrl = `${
       window.location.origin
-    }/Vision/DynamicImagesNoScroll/extensionDialog.html`;
+    }/DynamicImagesNoScroll/extensionDialog.html`;
 
     tableau.extensions.ui
       .displayDialogAsync(popupUrl, defaultIntervalInMin, {
