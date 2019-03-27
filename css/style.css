@@ -39,13 +39,14 @@ a:hover {
   display: inline-block;
   text-align: center;
   margin: 0 14px 15px;
+  width: 150px;
+  height: 210px;
 }
 
 .images .imageContainer img {
   border-radius: 3px;
   margin-bottom: 5px;
-  width: 150px;
-  height: 210px;
+  height: 100%;
 }
 
 .images .imageContainer .counter {
