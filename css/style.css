@@ -46,7 +46,7 @@ a:hover {
 .images .imageContainer img {
   border-radius: 3px;
   margin-bottom: 5px;
-  height: 100%;
+  height: calc(100% - 17px);
 }
 
 .images .imageContainer .counter {
