@@ -63,15 +63,6 @@
       });
   }
 
-  function getSelectedSheet(worksheetName) {
-    // go through all the worksheets in the dashboard and find the one we want
-    return tableau.extensions.dashboardContent.dashboard.worksheets.find(
-      function(sheet) {
-        return sheet.name === worksheetName;
-      }
-    );
-  }
-
   function displayImages(images, count, countText, percentages, links) {
     $("#selected_marks").empty();
 
