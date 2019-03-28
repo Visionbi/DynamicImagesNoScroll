@@ -254,26 +254,29 @@
               });
               return [rowData[indexCountText]];
             });
-          }
 
-          // generate default settings for secondary table
-          let count = [],
-            percentages = [],
-            link = [];
-          for (let i = 0; i < secondaryColumnNumber; i++) {
-            count.push([0]);
-            percentages.push([undefined]);
-            link.push([undefined]);
-          }
+            // generate default settings for secondary table
+            let count = [],
+              percentages = [],
+              link = [];
+            for (let i = 0; i < secondaryColumnNumber; i++) {
+              count.push([0]);
+              percentages.push([undefined]);
+              link.push([undefined]);
+            }
 
-          // Populate the data table with the rows and columns we just pulled out
-          displayImages(
-            secondaryImage,
-            count,
-            secondaryCountText,
-            percentages,
-            link
-          );
+            // Populate the data table with the rows and columns we just pulled out
+            displayImages(
+              secondaryImage,
+              count,
+              secondaryCountText,
+              percentages,
+              link
+            );
+          } else {
+            // Populate the data table with the rows and columns we just pulled out
+            displayImages(image, count, countText, percentages, prices);
+          }
         });
       } else {
         // Populate the data table with the rows and columns we just pulled out
