@@ -95,8 +95,8 @@
       }).appendTo("#selected_marks");
 
       if (link.indexOf("undefined") === -1) {
-        imageContainer.href = `${link}`;
-        imageContainer.target = "_blank";
+        imageContainer[0].href = `${link}`;
+        imageContainer[0].target = "_blank";
       }
 
       $("<img />", {
