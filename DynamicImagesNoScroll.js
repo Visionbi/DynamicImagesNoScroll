@@ -5,6 +5,11 @@
   const defaultIntervalInMin = "5";
   let unregisterHandlerFunctions = [];
 
+  // default values for secondary worksheet
+  const secondaryImageIndex = 1;
+  const secondaryIndexCountText = 4;
+  const secondaryColumnNumber = 5;
+
   // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(() => {
     // Tell Tableau we'd like to initialize our extension
@@ -87,9 +92,12 @@
 
       let imageContainer = $("<a>", {
         class: "imageContainer",
-        href: `${link}`,
-        target: "_blank"
       }).appendTo("#selected_marks");
+
+      if (link.indexOf("undefined") === -1) {
+        imageContainer.href = `${link}`;
+        imageContainer.target = "_blank";
+      }
 
       $("<img />", {
         src: `${image}`,
@@ -128,7 +136,7 @@
         imagesRow.append(imageContainer);
       }
 
-      if (i === (images.length - 1) && imagesRow.html()) {
+      if (i === images.length - 1 && imagesRow.html()) {
         imagesRow.append(imageContainer);
         imagesContainer.append(imagesRow);
       }
@@ -168,11 +176,13 @@
         parseInfo(settings);
       }
     );
+
     let indexImage = settings.selectedImage[1];
     let indexCount = settings.selectedCount[1];
     let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
     let indexLink = settings.selectedLink[1];
+    let selectedWorksheet = eval(settings.selectedWorksheet)[0];
 
     worksheet.getSummaryDataAsync().then(marks => {
       const worksheetData = marks;
@@ -225,8 +235,57 @@
         return [rowData[indexLink]];
       });
 
-      // Populate the data table with the rows and columns we just pulled out
-      displayImages(image, count, countText, percentages, link);
+      // initialize with 5 fixed items from a secondary worksheet if no data according to filters
+      if (!worksheetData.data.length && selectedWorksheet) {
+        const secondaryWorksheet = getSelectedSheet(selectedWorksheet);
+        let secondaryImage;
+        let secondaryCountText;
+
+        secondaryWorksheet.getSummaryDataAsync().then(marks => {
+          const secondaryWorksheetData = marks;
+
+          if (secondaryWorksheetData.data.length) {
+            indexImage = secondaryImageIndex;
+            indexCountText = secondaryIndexCountText;
+
+            secondaryImage = secondaryWorksheetData.data.map(row => {
+              const rowData = row.map(cell => {
+                return cell.formattedValue;
+              });
+              return [rowData[indexImage]];
+            });
+
+            secondaryCountText = secondaryWorksheetData.data.map(row => {
+              const rowData = row.map(cell => {
+                return cell.formattedValue;
+              });
+              return [rowData[indexCountText]];
+            });
+          }
+
+          // generate default settings for secondary table
+          let count = [],
+            percentages = [],
+            link = [];
+          for (let i = 0; i < secondaryColumnNumber; i++) {
+            count.push([0]);
+            percentages.push([undefined]);
+            link.push([undefined]);
+          }
+
+          // Populate the data table with the rows and columns we just pulled out
+          displayImages(
+            secondaryImage,
+            count,
+            secondaryCountText,
+            percentages,
+            link
+          );
+        });
+      } else {
+        // Populate the data table with the rows and columns we just pulled out
+        displayImages(image, count, countText, percentages, link);
+      }
     });
   }
 

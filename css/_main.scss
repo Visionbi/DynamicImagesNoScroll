@@ -5,7 +5,11 @@ h5 {
 a {
   text-decoration: none;
 
-  &:hover {
+  &:not([href]):hover {
+    text-decoration: none;
+  }
+
+  &[href]:hover {
     text-decoration: underline;
   }
 }
@@ -19,11 +23,7 @@ a {
   text-align: center;
 }
 
-#images,
-#count,
-#countText,
-#percentages,
-#link {
+.configItem {
   label {
     margin-left: 10px;
     font-weight: normal;
