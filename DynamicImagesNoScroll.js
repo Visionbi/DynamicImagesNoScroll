@@ -275,7 +275,7 @@
             );
           } else {
             // Populate the data table with the rows and columns we just pulled out
-            displayImages(image, count, countText, percentages, prices);
+            displayImages(image, count, countText, percentages, link);
           }
         });
       } else {
