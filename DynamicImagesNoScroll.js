@@ -182,7 +182,10 @@
     let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
     let indexLink = settings.selectedLink[1];
-    let selectedWorksheet = eval(settings.selectedWorksheet)[0];
+    let selectedWorksheet =
+      settings.selectedWorksheet.length > 0
+        ? eval(settings.selectedWorksheet)[0]
+        : false;
 
     worksheet.getSummaryDataAsync().then(marks => {
       const worksheetData = marks;
