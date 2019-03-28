@@ -24,7 +24,7 @@ a[href]:hover {
   text-align: center;
 }
 
-.configItem label {
+input[type="radio"] ~ label {
   margin-left: 10px;
   font-weight: normal;
 }
