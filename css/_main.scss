@@ -36,13 +36,13 @@ input[type="radio"] ~ label {
   .imageContainer {
     display: inline-block;
     text-align: center;
-    margin: 0 14px 45px;
+    margin: 0 14px 20px;
     width: 150px;
-    height: 210px;
+    // height: 210px;
 
     .imageItem {
       border-radius: 3px;
-      margin-bottom: 5px;
+      margin-bottom: 22px;
       height: calc(100% - 17px);
       display: flex;
       flex-flow: column;
@@ -52,7 +52,8 @@ input[type="radio"] ~ label {
         // border-radius: 3px;
         // margin-bottom: 5px;
         // height: calc(100% - 17px);
-        width: 100%;
+        max-width: 100%;
+        max-height: 210px;
       }
     }
 

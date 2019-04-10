@@ -38,14 +38,13 @@ input[type="radio"] ~ label {
 .images .imageContainer {
   display: inline-block;
   text-align: center;
-  margin: 0 14px 45px;
+  margin: 0 14px 20px;
   width: 150px;
-  height: 210px;
 }
 
 .images .imageContainer .imageItem {
   border-radius: 3px;
-  margin-bottom: 5px;
+  margin-bottom: 22px;
   height: calc(100% - 17px);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -60,7 +59,8 @@ input[type="radio"] ~ label {
 }
 
 .images .imageContainer .imageItem img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 210px;
 }
 
 .images .imageContainer .counter {
