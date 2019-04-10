@@ -43,10 +43,24 @@ input[type="radio"] ~ label {
   height: 210px;
 }
 
-.images .imageContainer img {
+.images .imageContainer .imageItem {
   border-radius: 3px;
   margin-bottom: 5px;
   height: calc(100% - 17px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.images .imageContainer .imageItem img {
+  width: 100%;
 }
 
 .images .imageContainer .counter {
