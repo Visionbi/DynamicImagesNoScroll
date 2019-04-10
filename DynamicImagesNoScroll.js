@@ -85,7 +85,7 @@
         class: "imageContainer",
       }).appendTo("#selected_marks");
 
-      let imageItem = $("<a>", {
+      let imageItem = $("<div>", {
         class: "imageItem",
       }).appendTo(imageContainer);
 
