@@ -40,10 +40,20 @@ input[type="radio"] ~ label {
     width: 150px;
     height: 210px;
 
-    img {
+    .imageItem {
       border-radius: 3px;
       margin-bottom: 5px;
       height: calc(100% - 17px);
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+
+      img {
+        // border-radius: 3px;
+        // margin-bottom: 5px;
+        // height: calc(100% - 17px);
+        width: 100%;
+      }
     }
 
     .counter {

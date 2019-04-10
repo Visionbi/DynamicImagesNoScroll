@@ -85,6 +85,10 @@
         class: "imageContainer",
       }).appendTo("#selected_marks");
 
+      let imageItem = $("<a>", {
+        class: "imageItem",
+      }).appendTo(imageContainer);
+
       if (link.indexOf("undefined") === -1) {
         imageContainer[0].href = `${link}`;
         imageContainer[0].target = "_blank";
@@ -93,7 +97,7 @@
       $("<img />", {
         src: `${image}`,
         alt: "",
-      }).appendTo(imageContainer);
+      }).appendTo(imageItem);
 
       let firstLine = "";
 
